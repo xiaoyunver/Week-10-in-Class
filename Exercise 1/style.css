@@ -1,0 +1,56 @@
+html,body,div,ul,li,svg{
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+
+/*------------Global-------------*/
+html,body{
+    height: 100%;
+    position: relative;
+    background: rgb(242,244,233);
+}
+
+.container .section{
+    width:100%;
+}
+.container .canvas{
+    width:100%;
+    /*background:white;*/
+    height:700px;
+}
+.container .controls{
+    margin-bottom:20px;
+}
+
+/*------------font-------------*/
+body{
+    font-size: 16px;
+}
+h1{ font-size:2em;}
+h2{ font-size:1.3em;}
+p{
+    font-family:"Droid Serif", serif;
+}
+
+/*-----------map/svg-----------*/
+.map .state{
+    fill:rgb(150,155,150);
+    stroke:white;
+    stroke-width:1px;
+}
+.map .counties{
+    stroke:rgb(190,190,190);
+    stroke-width:1px;
+    fill:none;
+}
+.map .city{
+    fill:white;
+    stroke:black;
+    stroke-width:2px;
+}
+.map .line{
+    fill:none;
+    stroke:red;
+    stroke-width:2px;
+}
