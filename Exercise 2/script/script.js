@@ -15,7 +15,7 @@ var projection = d3.geo.albersUsa()
 	.translate([width/2, height/2]);
 
 //Then, define a 
-var path = d3.geo.path()
+var pathGenerator = d3.geo.path()
 	.projection(projection);
 
 //creating a map structure
@@ -25,7 +25,7 @@ var rateById = d3.map();
 var formatNumber = d3.format('05');
 
 //Color scale
-var colorScale = d3.scale.linear();
+var colorScale = d3.scale.linear().domain([0,.2]).range(['white','red']);
 
 //import geojson data
 queue()
@@ -34,13 +34,37 @@ queue()
     .defer(d3.tsv, "data/unemployment.tsv", parseData)
 	.await(function(err, counties, states){
 
+        draw(counties, states);
+    })
 
-		draw(counties, states);
-	})
+        //console.log(counties);
+       // console.log(rateById);
 
 function draw(counties, states){
+        svg.selectAll('.county')
+            .data(counties.features)
+            .enter()
+            .append('path')
+            .attr('class','county')
+            .attr('d',pathGenerator)
+            .style('fill',function(d){
+                //console.log(d);
+                var countyId = +(d.properties.STATE + d.properties.COUNTY);
+                var rate = rateById.get(countyId);//0-1
+                if(rate==undefined){
+                return('purple')};
+                return colorScale(rate);
+            });
+
+        svg.append('path')
+            .datum(states)
+            .attr('class','state')
+            .attr('d',pathGenerator);
+
+
 
 }
 
 function parseData(d){
+    rateById.set(d.id, +d.rate)
 }
